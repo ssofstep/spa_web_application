@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "spa-web-application"
+version = "0.1.0"
+description = ""
+authors = ["Sofia <ssofstep7627@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
