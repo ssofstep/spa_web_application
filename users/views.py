@@ -1,11 +1,11 @@
 from rest_framework import viewsets, generics, filters
 
 from users.models import Payments
-from users.serializers import PaymentsSerializer, CustomUserSerializer
+from users.serializers import PaymentsSerializer, UserSerializer
 
 
 class UserCreateAPIView(generics.CreateAPIView):
-    serializer_class = CustomUserSerializer
+    serializer_class = UserSerializer
 
 
 class PaymentsViewSet(viewsets.ModelViewSet):
