@@ -5,18 +5,16 @@ from materials.models import Course, Lesson
 
 
 class User(AbstractUser):
-    username = None
-    email = models.EmailField(unique=True, verbose_name="Почта пользователя")
-    phone = models.CharField(max_length=45, blank=True, null=True, verbose_name="Телефон пользователя")
-    tg_nick = models.CharField(max_length=15, blank=True, null=True, verbose_name="Телеграмм ник")
-    city = models.CharField(max_length=20, verbose_name="Город")
-    avatar = models.ImageField(upload_to="users/avatars", blank=True, null=True, verbose_name="Аватар")
+    email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', ]
 
     def __str__(self):
-        return f'{self.username} {self.email}'
+        return f'{self.email}'
 
     class Meta:
         verbose_name = "Пользователь"
