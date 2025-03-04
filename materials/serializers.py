@@ -1,12 +1,15 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from materials.models import Course, Lesson
+from materials.models import Course, Lesson, Subscription
+from materials.validators import LinkValidator
+
 
 class LessonSerializer(ModelSerializer):
     class Meta:
         model = Lesson
         fields = '__all__'
+        validators = [LinkValidator(field='link')]
 
 
 class CourseSerializer(ModelSerializer):
@@ -29,3 +32,7 @@ class CourseDetailSerializers(serializers.ModelSerializer):
 
 
 
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = ("sign_of_subscription",)
