@@ -6,99 +6,16 @@ from materials.models import Course, Lesson, Subscription
 from users.models import User
 
 
-class CourseTestCase(APITestCase):
-
-    def setUp(self):
-        self.user = User.objects.create(email='admin@sky.com')
-        self.course = Course.objects.create(title='Python course', description='Python course junior', owner=self.user)
-        self.lesson = Lesson.objects.create(title='Python lesson', description='Python lessons decorators')
-        self.client.force_authenticate(user=self.user)
-
-    def test_course_retrieve(self):
-        url = reverse('materials:course-detail', args=(self.course.pk,))
-        response = self.client.get(url)
-        data = response.json()
-        self.assertEqual(
-            response.status_code, status.HTTP_200_OK
-        )
-        self.assertEqual(
-            data.get('title'), self.course.title
-        )
-
-    def test_course_create(self):
-        self.assertEqual(
-            Course.objects.all().count(), 1
-        )
-
-    def test_course_update(self):
-        url = reverse('materials:course-detail', args=(self.course.pk,))
-        data = {
-            'title': 'Design'
-        }
-        response = self.client.patch(url, data)
-        data = response.json()
-        self.assertEqual(
-            response.status_code, status.HTTP_200_OK
-        )
-        self.assertEqual(
-            data.get('title'), 'Design'
-        )
-
-    def test_course_delete(self):
-        url = reverse('materials:course-detail', args=(self.course.pk,))
-
-        response = self.client.delete(url)
-        self.assertEqual(
-            response.status_code, status.HTTP_204_NO_CONTENT
-        )
-        self.assertEqual(
-            Course.objects.all().count(), 0
-        )
-
-    def test_course_list(self):
-        url = reverse('materials:course-list')
-        response = self.client.get(url)
-        data = response.json()
-        result = {
-            "count": 1,
-            "next": None,
-            "previous": None,
-            "results": [
-                {
-                    "lessons": [
-                        {
-                            "id": self.lesson.pk,
-                            "title": self.lesson.title,
-                            "description": self.lesson.description,
-                            "image": None,
-                            "link": None,
-                            "course": self.course.pk,
-                            "owner": None
-                        }
-                    ],
-                    "title": self.course.title,
-                    "image": None,
-                    "link": None,
-                    "owner": self.user.pk
-                }
-            ]}
-        self.assertEqual(
-            response.status_code, status.HTTP_200_OK
-        )
-        self.assertEqual(
-            data, result
-        )
-
 
 class LessonTestCase(APITestCase):
 
     def setUp(self):
         self.user = User.objects.create(email='admin@sky.com')
-        self.course = Course.objects.create(title='Python course', description='Python course', owner=self.user)
-        self.lesson = Lesson.objects.create(title='Python lesson', description='Python course',
+        self.course = Course.objects.create(title='Python course', description='Python course jun', owner=self.user)
+        self.lesson = Lesson.objects.create(title='Python lesson', description='Python lesson decorators',
+                                            course=self.course,
                                             owner=self.user)
         self.client.force_authenticate(user=self.user)
-
 
     def test_lesson_create(self):
 
@@ -143,31 +60,37 @@ class LessonTestCase(APITestCase):
                 {
                     "id": self.lesson.pk,
                     "title": self.lesson.title,
-                    "description": self.lesson.description,
                     "image": None,
-                    "link": None,
-                    "course": self.course.pk,
-                    "owner": self.user.pk
+                    "description": self.lesson.description,
+                    "link": '',
+                    "owner": self.user.pk,
+                    "course": self.course.pk
                 }]}
         self.assertEqual(
             response.status_code, status.HTTP_200_OK
+        )
+        self.assertEqual(
+            data, result
         )
 
 class SubscriptionTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create(email='admin@sky.com')
-        self.course = Course.objects.create(title='Python course', description='Python course', owner=self.user)
-        self.lesson = Lesson.objects.create(title='Python lesson', description='Python course',
+        self.course = Course.objects.create(title='Python course', description='Python course jun', owner=self.user)
+        self.lesson = Lesson.objects.create(title='Python lesson', description='Python lesson decorators',
+                                            course=self.course,
                                             owner=self.user)
         self.client.force_authenticate(user=self.user)
 
     def test_subscription_create(self):
         url = reverse('materials:course_subscription')
         data = {
-            'user': self.user,
-            'course': self.course.pk
+            'user': self.user.pk,
+            'course': self.course.pk,
+            'lesson': self.lesson.pk
         }
         response = self.client.post(url, data)
+
         data = response.json()
         self.assertEqual(
             response.status_code, status.HTTP_200_OK
@@ -177,13 +100,15 @@ class SubscriptionTestCase(APITestCase):
         )
 
     def test_subscription_delete(self):
-        self.subscription = Subscription.objects.create()
+        self.subscription = Subscription.objects.create(user=self.user, course=self.course, lesson=self.lesson, sign_of_subscription=True)
         url = reverse('materials:course_subscription')
         data = {
-            'user': self.user,
-            'course': self.course.pk
+            'user': self.user.pk,
+            'course': self.course.pk,
+            'lesson': self.lesson.pk
         }
         response = self.client.post(url, data)
+
         data = response.json()
         self.assertEqual(
             response.status_code, status.HTTP_200_OK

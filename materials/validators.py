@@ -8,6 +8,7 @@ class LinkValidator:
 
     def __call__(self, value):
         youtube_url = 'https://www.youtube.com/'
-        if youtube_url not in value.get('link'):
-            raise ValidationError('Нужна ссылка только youtube.com')
+        if value.get("link"):
+            if youtube_url not in value.get('link'):
+                raise ValidationError('Нужна ссылка только youtube.com')
         return None
