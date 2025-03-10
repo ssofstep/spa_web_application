@@ -33,6 +33,10 @@ class Payments(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
+    session_id = models.CharField(max_length=255, verbose_name='Id сессии', null=True,
+                                  blank=True)
+    link = models.URLField(max_length=400, verbose_name='Ссылка на оплату',
+                           null=True, blank=True)
 
 
     def __str__(self):
