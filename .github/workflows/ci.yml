@@ -51,7 +51,7 @@ jobs:
 
     steps:
     - name: Set up SSH
-      uses: appleboy/ssh-action@v0.1.6
+      uses: webfactory/ssh-agent@v0.8.1
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SSH_USER }}
