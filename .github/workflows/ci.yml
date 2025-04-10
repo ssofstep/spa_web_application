@@ -58,6 +58,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
 
+
     - name: Copy project files to server
       run: |
         rsync -avz --exclude '__pycache__' . ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}
