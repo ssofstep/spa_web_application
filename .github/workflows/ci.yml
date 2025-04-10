@@ -57,7 +57,7 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
-
+        debug: true
 
     - name: Copy project files to server
       run: |
