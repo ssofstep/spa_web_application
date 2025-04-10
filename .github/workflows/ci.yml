@@ -53,7 +53,10 @@ jobs:
     - name: Set up SSH
       uses: appleboy/ssh-action@v0.1.6
       with:
-        ssh-private-key: ${{ secrets.SSH_KEY }}
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
 
     - name: Copy project files to server
       run: |
