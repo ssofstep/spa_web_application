@@ -1,6 +1,6 @@
 name: spa_web_application
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   test:
