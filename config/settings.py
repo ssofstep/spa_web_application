@@ -12,11 +12,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = 'django-insecure-gd-rgy^x0mln@40dwp$l_7&=*l6^m&(6_l#c_s2!yhi=ur(@hf'
 
-STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
+STRIPE_API_KEY = 'sk_test_51R10wn07HOPVpghyXET6VBYotq6Sk6hcDnIAjGrciPT1frC2U9Ac1w8zNJQonj5lK44mXxqcFRaGuy2exCLZnY3500pNm07wee'
 
-DEBUG = True if os.getenv("DEBUG") == "True" else False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -76,11 +76,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('NAME'),
-        'USER': os.getenv('USER'),
-        'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
-        'PORT': os.getenv('PORT'),
+        'NAME': 'spa_web_application',
+        'USER': 'postgres',
+        'PASSWORD': '7627',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
